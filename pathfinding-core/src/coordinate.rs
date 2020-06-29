@@ -1,6 +1,12 @@
 use super::*;
 use std::hash::{Hash, Hasher};
 
+#[derive(PartialOrd, Debug, Clone, Copy, Serialize, Deserialize)]
+pub struct Coordinate {
+    pub x: f64,
+    pub y: f64,
+}
+
 impl Eq for Coordinate {}
 impl PartialEq for Coordinate {
     fn eq(&self, other: &Self) -> bool {
@@ -8,10 +14,11 @@ impl PartialEq for Coordinate {
     }
 }
 
-#[derive(PartialOrd, Debug, Clone, Copy, Serialize, Deserialize)]
-pub struct Coordinate {
-    pub x: f64,
-    pub y: f64,
+impl Hash for Coordinate {
+  fn hash<H: Hasher>(&self, hasher: &mut H) {
+      helpers::integer_decode(self.x).hash(hasher);
+      helpers::integer_decode(self.y).hash(hasher);
+  }
 }
 
 impl Coordinate {
@@ -104,12 +111,5 @@ impl Coordinate {
             helpers::integer_decode(self.x),
             helpers::integer_decode(self.y),
         )
-    }
-}
-
-impl Hash for Coordinate {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
-        helpers::integer_decode(self.x).hash(hasher);
-        helpers::integer_decode(self.y).hash(hasher);
     }
 }

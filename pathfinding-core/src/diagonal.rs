@@ -5,8 +5,8 @@ pub struct Diagonal {
     pub point: Coordinate,
     pub route_sides: (Coordinate, Coordinate),
 }
-impl Eq for Diagonal {}
 
+impl Eq for Diagonal {}
 impl PartialEq for Diagonal {
     fn eq(&self, other: &Self) -> bool {
         self.point.as_int_tuple() == other.point.as_int_tuple()
